@@ -18,6 +18,9 @@
 		event.target.reset();
 	}
 
+	/**
+	 * @param {number} n
+	 */
 	function formatNumber(n) {
 		if (n > 0) {
 			return n < 10 ? `0${n}` : n;
@@ -79,6 +82,7 @@
 					placeholder="Answer..."
 					bind:value={answer}
 					on:keydown={checkAnswer}
+					required
 				/>
 			</div>
 		{/if}
