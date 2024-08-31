@@ -98,8 +98,7 @@
 </main>
 
 <style>
-	section,
-	footer {
+	section {
 		display: flex;
 		font-size: 2em;
 		gap: 20px;
@@ -107,6 +106,10 @@
 	}
 
 	footer {
+		display: grid;
+		font-size: 1.5em;
+		gap: 10px;
+		grid-template-columns: repeat(10, 1fr);
 		justify-content: center;
 	}
 
