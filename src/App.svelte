@@ -29,14 +29,21 @@
 		}
 	}
 
-	function checkAnswer(event) {
-		if (event.key === "Enter") {
+	function checkAnswer({ key }) {
+		if (key === "Enter") {
 			const sum = questions[currentQ].reduce((a, b) => a + b, 0);
 			answers.push({ correct: Number(answer) === sum, answer });
 			currentQ++;
 			answer = "";
 			frame = Math.floor(Math.random() * 4);
 		}
+	}
+
+	function undoAnswer() {
+		answers.pop();
+		currentQ--;
+		answer = "";
+		frame = Math.floor(Math.random() * 4);
 	}
 </script>
 
@@ -68,7 +75,7 @@
 					></div>
 
 					{#if questions[currentQ]}
-						<ul>
+						<ul data-q={currentQ} data-qmax={questions.length}>
 							{#each questions[currentQ] as number}
 								{#if number}
 									<li>{formatNumber(number)}</li>
@@ -77,13 +84,19 @@
 						</ul>
 					{/if}
 				</section>
-				<input
-					type="number"
-					placeholder="Answer..."
-					bind:value={answer}
-					on:keydown={checkAnswer}
-					required
-				/>
+				<fieldset>
+					{#if currentQ > 0}
+						<button type="button" on:click={undoAnswer}>⬅ BACK</button>
+					{/if}
+
+					<input
+						type="number"
+						placeholder="Answer..."
+						bind:value={answer}
+						on:keydown={checkAnswer}
+						required
+					/>
+				</fieldset>
 			</div>
 		{/if}
 	{:else}
@@ -115,6 +128,7 @@
 
 	ul {
 		border: 1px solid white;
+		position: relative;
 
 		& li {
 			list-style: none;
@@ -148,5 +162,18 @@
 		&[data-frame="3"] {
 			background-position-x: -1200px;
 		}
+	}
+
+	[data-q]:after {
+		background: #111;
+		border-radius: 8px;
+		content: "Q: " attr(data-q) "/" attr(data-qmax);
+		font-size: 0.7em;
+		padding: 0 20px;
+		position: absolute;
+		top: 0;
+		right: -10px;
+		transform: translateY(-100%) scale(0.9);
+		width: 100%;
 	}
 </style>
