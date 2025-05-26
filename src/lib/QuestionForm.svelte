@@ -32,6 +32,10 @@
 	{#if questions.length > 2}
 		<button type="button" on:click={start}>Start</button>
 	{/if}
+
+	{#if questions.length}
+		<p style="color: #CCC">Last question: {questions.at(-1)}</p>
+	{/if}
 </form>
 
 <style>

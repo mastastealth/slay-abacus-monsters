@@ -16,6 +16,7 @@
 		questions = [...questions, numericValues];
 		// Clear the form inputs
 		event.target.reset();
+		document.getElementById("question1").focus();
 	}
 
 	/**
